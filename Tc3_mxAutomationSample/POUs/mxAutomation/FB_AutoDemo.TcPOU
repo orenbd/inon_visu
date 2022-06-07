@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_AutoDemo" Id="{6cd759e3-5147-48aa-a8e1-fd16d7148084}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoDemo
+VAR_INPUT
+	bExecute : BOOL;
+END_VAR
+VAR_OUTPUT
+	bBusy : BOOL;
+END_VAR
+VAR
+	nCurStep					: UDINT;
+	i							: UDINT;
+	nCurRunCount				: UDINT;
+	fbMoveDirectAbs				: MC_MoveDirectAbsolute;
+	fbMoveLinAbs 				: ARRAY [1..3] OF MC_MoveLinearAbsolute;
+	fVeloM						: REAL := 2.0;
+	fVeloPer					: REAL := 100.0;
+	fAccM						: REAL := 2.3;
+	fAccPer						: REAL := 100;
+	
+	stPrePos					: E6POS;
+	stCoordSys					: COORDSYS;
+	stApo1						: APO;
+	
+	fbKRC_Interrupt				: KRC_Interrupt;
+	fbKRC_Continue				: KRC_Continue;
+	
+	iPosCount					: UINT :=1;
+END_VAR
+VAR CONSTANT
+	POSARRLENGTH : UINT := 4;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nCurStep OF
+0:
+	bBusy := FALSE;
+
+	
+	IF bExecute THEN
+		iPosCount := 1;
+		stApo1.CP_MODE := 0;
+		stApo1.CDIS := 0;
+		
+		FOR i:= 1 TO 2  DO
+			fbMoveLinAbs[i](Execute:= FALSE); 
+		END_FOR
+		fbMoveDirectAbs(Execute:= FALSE); 
+		bBusy := TRUE;
+		//PTP
+		nCurStep := nCurStep + 10;
+		nCurRunCount := 0;
+		i := 0;
+	END_IF
+	
+10:	
+	M_MoveDirectToInitPos();
+20:
+	fbMoveLinAbs[2]();
+	fbMoveLinAbs[3]();
+	IF fbMoveLinAbs[1].ComAcpt AND NOT fbMoveLinAbs[2].Busy THEN
+		fbMoveLinAbs[1].Execute := FALSE;
+		iPosCount := iPosCount + 1;
+		IF iPosCount > POSARRLENGTH THEN
+			iPosCount := 1;
+		END_IF
+		nCurStep := nCurStep + 10;
+	ELSE
+		fbMoveLinAbs[1].Execute := TRUE;
+	END_IF
+	
+	fbMoveLinAbs[1](
+			AxisGroupIdx:= GVL.nAxisIndex, 
+			Position:= GVL.aPosArray[iPosCount].E6POS, 
+			Velocity:= fVeloM, 
+			Acceleration:=fAccM , 
+			CoordinateSystem:= stCoordSys, 
+			OriType:= , 
+			Approximate:= stApo1, 
+			QueueMode:= 2 , 
+			ComAcpt=> , 
+			ComBusy=> , 
+			Busy=> , 
+			Active=> , 
+			Done=> , 
+			CommandAborted=> , 
+			Error=> , 
+			ErrorID=> );
+		
+		
+	IF bExecute = FALSE THEN
+		nCurStep := 100;
+	END_IF
+
+30:	
+	fbMoveLinAbs[1]();
+	fbMoveLinAbs[3]();
+	
+	IF fbMoveLinAbs[2].ComAcpt AND NOT fbMoveLinAbs[3].Busy THEN
+		fbMoveLinAbs[2].Execute := FALSE;
+		iPosCount := iPosCount + 1;
+		IF iPosCount > POSARRLENGTH THEN
+			iPosCount := 1;
+		END_IF
+		nCurStep := nCurStep + 10;
+	ELSE
+		fbMoveLinAbs[2].Execute := TRUE;
+	END_IF	
+	
+	fbMoveLinAbs[2](
+		AxisGroupIdx:= gvl.nAxisIndex, 
+		Position:= GVL.aPosArray[iPosCount].E6POS, 
+		Velocity:= fVeloM, 
+		Acceleration:=fAccM , 
+		CoordinateSystem:= stCoordSys, 
+		OriType:= , 
+		Approximate:= stApo1, 
+		QueueMode:= 2 , 
+		ComAcpt=> , 
+		ComBusy=> , 
+		Busy=> , 
+		Active=> , 
+		Done=> , 
+		CommandAborted=> , 
+		Error=> , 
+		ErrorID=> );
+		
+	
+	
+	IF bExecute = FALSE THEN
+		nCurStep := 100;
+	END_IF
+	
+40:	
+	fbMoveLinAbs[1]();
+	fbMoveLinAbs[2]();
+	
+	IF fbMoveLinAbs[3].ComAcpt AND NOT fbMoveLinAbs[1].Busy THEN
+		fbMoveLinAbs[3].Execute := FALSE;
+		iPosCount := iPosCount + 1;
+		IF iPosCount > POSARRLENGTH THEN
+			iPosCount := 1;
+		END_IF
+		nCurStep := 20;
+	ELSE
+		fbMoveLinAbs[3].Execute := TRUE;
+	END_IF	
+	
+	fbMoveLinAbs[3](
+		AxisGroupIdx:= gvl.nAxisIndex, 
+		Position:= GVL.aPosArray[iPosCount].E6POS, 
+		Velocity:= fVeloM, 
+		Acceleration:=fAccM , 
+		CoordinateSystem:= stCoordSys, 
+		OriType:= , 
+		Approximate:= stApo1, 
+		QueueMode:= 2 , 
+		ComAcpt=> , 
+		ComBusy=> , 
+		Busy=> , 
+		Active=> , 
+		Done=> , 
+		CommandAborted=> , 
+		Error=> , 
+		ErrorID=> );
+		
+	
+	
+	IF bExecute = FALSE THEN
+		nCurStep := 100;
+	END_IF
+	
+100:
+	fbMoveLinAbs[1]();
+	fbMoveLinAbs[2]();
+	fbMoveLinAbs[3]();
+	
+	IF NOT bExecute AND NOT fbMoveDirectAbs.Busy 
+		AND NOT fbMoveLinAbs[1].Busy AND NOT fbMoveLinAbs[2].Busy AND NOT fbMoveLinAbs[3].Busy THEN
+		nCurStep := 0;
+	END_IF
+		
+END_CASE
+
+fbKRC_Interrupt(
+	AxisGroupIdx:= GVL.nAxisIndex, 
+	Execute:= , 
+	Fast:= , 
+	BrakeActive=> , 
+	Error=> , 
+	ErrorID=> );
+	
+fbKRC_Continue(AxisGroupIdx:= GVL.nAxisIndex, Enable:= , Error=> , ErrorID=> );]]></ST>
+    </Implementation>
+    <Method Name="M_MoveDirectToInitPos" Id="{8a07c01f-60ab-4744-8b98-69965a044512}">
+      <Declaration><![CDATA[METHOD M_MoveDirectToInitPos : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stPrePos := GVL.aPosArray[1].E6POS;
+stCoordSys := GVL.aPosArray[1].COORDSYS;
+
+fbMoveDirectAbs(
+	AxisGroupIdx:= GVL.nAxisIndex , 
+	Execute:= TRUE, 
+	Position:= stPrePos, 
+	Velocity:= fVeloPer , 
+	Acceleration:=fAccPer , 
+	CoordinateSystem:= stCoordSys , 
+	Approximate:=stApo1 , 
+	QueueMode:=  2, 
+	ComAcpt=> , 
+	ComBusy=> , 
+	Busy=> , 
+	Active=> , 
+	Done=> , 
+	CommandAborted=> , 
+	Error=> , 
+	ErrorID=> );
+	
+IF fbMoveDirectAbs.Done THEN
+	fbMoveDirectAbs(Execute := FALSE); 
+	nCurStep := nCurStep + 10;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_AutoDemo">
+      <LineId Id="1807" Count="1" />
+      <LineId Id="2415" Count="0" />
+      <LineId Id="2418" Count="0" />
+      <LineId Id="1809" Count="0" />
+      <LineId Id="2252" Count="0" />
+      <LineId Id="1810" Count="0" />
+      <LineId Id="2420" Count="0" />
+      <LineId Id="2419" Count="0" />
+      <LineId Id="1811" Count="8" />
+      <LineId Id="1821" Count="3" />
+      <LineId Id="2248" Count="0" />
+      <LineId Id="2300" Count="0" />
+      <LineId Id="2460" Count="0" />
+      <LineId Id="2352" Count="0" />
+      <LineId Id="2354" Count="0" />
+      <LineId Id="2367" Count="4" />
+      <LineId Id="2356" Count="1" />
+      <LineId Id="2355" Count="0" />
+      <LineId Id="2353" Count="0" />
+      <LineId Id="2334" Count="2" />
+      <LineId Id="2338" Count="13" />
+      <LineId Id="2290" Count="1" />
+      <LineId Id="2258" Count="0" />
+      <LineId Id="2305" Count="1" />
+      <LineId Id="2288" Count="0" />
+      <LineId Id="2287" Count="0" />
+      <LineId Id="2309" Count="0" />
+      <LineId Id="2461" Count="0" />
+      <LineId Id="2310" Count="0" />
+      <LineId Id="2263" Count="0" />
+      <LineId Id="2307" Count="0" />
+      <LineId Id="2406" Count="4" />
+      <LineId Id="2308" Count="0" />
+      <LineId Id="2403" Count="2" />
+      <LineId Id="2264" Count="2" />
+      <LineId Id="2268" Count="13" />
+      <LineId Id="2299" Count="0" />
+      <LineId Id="2295" Count="0" />
+      <LineId Id="2282" Count="0" />
+      <LineId Id="2260" Count="0" />
+      <LineId Id="2311" Count="1" />
+      <LineId Id="2421" Count="2" />
+      <LineId Id="2462" Count="0" />
+      <LineId Id="2424" Count="35" />
+      <LineId Id="2112" Count="0" />
+      <LineId Id="2314" Count="1" />
+      <LineId Id="2463" Count="0" />
+      <LineId Id="2316" Count="0" />
+      <LineId Id="2048" Count="0" />
+      <LineId Id="2464" Count="0" />
+      <LineId Id="2049" Count="2" />
+      <LineId Id="2053" Count="10" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AutoDemo.M_MoveDirectToInitPos">
+      <LineId Id="36" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="37" Count="21" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

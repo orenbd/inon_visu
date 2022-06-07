@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="E_MxAStatus" Id="{af7ed4c1-f8d4-4214-b094-989a9d6cd9d1}">
+    <Declaration><![CDATA[TYPE E_MxAStatus :
+(
+	eMxA_Invalid := 0,
+	eMxA_Error,
+	eMxA_ProgramStopped,
+	eMxA_StandBy,
+	eMxA_Executing,
+	eMxA_Aborting
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

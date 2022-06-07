@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="PRG_Safety" Id="{07cfb583-5fe1-41a3-9172-98cce0d09e03}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Safety
+VAR
+	fbRTrigGateRequest	: R_TRIG; //trigger for hw switch
+	fbRTrigGateAck		: R_TRIG; //trigger for hw switch
+//	fbBlinkGate			: fbBlinkGate;
+	
+	
+	bGateAckSafety		: BOOL; //Resets and acknowledges all safety errors
+	nStateSafetyReset	: UDINT;
+	
+	fbSafePower1		: FB_SafePower; //Sets lamp and unsafe power signal for power supply 1 
+	fbSafePower2		: FB_SafePower; //Sets lamp and unsafe power signal for power supply 2
+	tonSafetyGateAck	: TON :=(PT:=T#0.5S); //
+	
+	nZero: UDINT 		:= 0; // provoke division by 0 in case of fatal safety reset error
+	bOut: BOOL;
+END_VAR
+VAR CONSTANT
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//=====================================
+//Power Kuka
+//=====================================
+GVL.out_DO2_1_Power230V_Kuka := GVL.in_DI1_3_SwitchPower3_230V;
+
+GVL.out_DO1_3_LightSelectPower3 := GVL.in_DI1_3_SwitchPower3_230V;
+
+//=====================================
+
+//=====================================
+// Gate 
+//=====================================
+fbRTrigGateRequest(CLK:=GVL.in_DI2_1_Tap_Request_SafetyGate);
+
+IF fbRTrigGateRequest.Q THEN
+	GVL.bToSafeGr1_GateRequest := TRUE;
+	
+	GVL.bToSafeGr1_ReqAutoMode := FALSE;
+	
+	bGateAckSafety := TRUE;
+END_IF
+
+fbRTrigGateAck(CLK:=GVL.in_DI2_2_AckSafetyGate);
+
+IF fbRTrigGateAck.Q THEN
+	GVL.bToSafeGr1_GateRequest := FALSE; 
+	GVL.bToSafeGr1_ReqAutoMode := TRUE;
+	bGateAckSafety := TRUE;
+END_IF
+
+//=====================================
+
+
+//=====================================
+// Gate Lamps
+//=====================================
+IF GVL.bFromSafeGr1_GateUnlocked THEN
+	
+	GVL.out_DO1_5_LightReqSafetyGate := TRUE;
+	GVL.out_DO1_6_LightAckSafetyGate := FALSE;
+ELSIF GVL.bFromSafeGr1_Power THEN
+	GVL.out_DO1_5_LightReqSafetyGate := FALSE;
+	GVL.out_DO1_6_LightAckSafetyGate := TRUE;
+ELSIF GVL.bToSafeGr1_GateRequest THEN
+//	fbBlinkGate(bEnable:= TRUE);
+//	GVL.out_DO1_5_LightReqSafetyGate := fbBlinkGate.bOut;
+	GVL.out_DO1_6_LightAckSafetyGate := FALSE;
+ELSIF GVL.bToSafeGr1_ReqAutoMode THEN
+//	fbBlinkGate(bEnable:= TRUE);
+	GVL.out_DO1_5_LightReqSafetyGate := FALSE;
+//	GVL.out_DO1_6_LightAckSafetyGate := fbBlinkGate.bOut;
+ELSE
+	gvl.out_DO1_5_LightReqSafetyGate := FALSE;
+	gvl.out_DO1_5_LightReqSafetyGate := FALSE;
+END_IF
+//=====================================
+
+
+//=====================================
+// Safety Confirmation/Reset
+// Called to start automatic mode
+//=====================================
+
+CASE nStateSafetyReset OF
+0:  
+	IF bGateAckSafety THEN
+		nStateSafetyReset := nStateSafetyReset + 10;
+	END_IF
+10:
+	GVL.bToSafeGr1_RunStopGrp1 := TRUE;
+	
+	nStateSafetyReset := nStateSafetyReset + 10;
+20:
+	GVL.bToSafeGr1_ErrAck := TRUE;
+	
+	GVL.bToSafeGr2_ErrAck := TRUE;
+	
+	
+	IF GVL.bToSafeGr1_ReqAutoMode THEN
+		nStateSafetyReset := 110;
+	ELSE
+		nStateSafetyReset := nStateSafetyReset := 500; //end
+	END_IF
+110:	// following steps may only be run if auto mode is requested
+
+	GVL.bToSafeGr1_EStopRestart1 := TRUE;
+	
+	GVL.bToSafeGr1_EStopRestart2 := TRUE;
+	
+	nStateSafetyReset := nStateSafetyReset + 10;
+120:
+	GVL.bToSafeGr1_GateMonReset := TRUE;
+	
+	nStateSafetyReset := nStateSafetyReset + 10;
+
+130:
+	//falling edge for reset 
+	tonSafetyGateAck(IN:= TRUE, PT := T#0.5S);
+	IF tonSafetyGateAck.Q THEN
+		tonSafetyGateAck(IN:= FALSE, PT := T#0.5S);
+		GVL.bToSafeGr1_GateMonReset := FALSE;
+		nStateSafetyReset := 500;
+	END_IF
+500:
+
+	GVL.bToSafeGr1_ErrAck := FALSE;
+	GVL.bToSafeGr2_ErrAck := FALSE;
+	GVL.bToSafeGr1_EStopRestart1 := FALSE;
+	GVL.bToSafeGr1_EStopRestart2 := FALSE;
+	GVL.bToSafeGr1_GateMonReset := FALSE;
+	bGateAckSafety := FALSE;
+	
+	IF NOT bGateAckSafety THEN
+		nStateSafetyReset := 0;
+	END_IF
+END_CASE
+
+//provoke division by 0 if auto mode is reset while auto mode not required
+IF ((NOT GVL.bToSafeGr1_ReqAutoMode) AND nStateSafetyReset >= 100 AND nStateSafetyReset < 500) THEN 
+	nStateSafetyReset := 0/nZero;
+END_IF
+//=====================================
+
+//=====================================
+// Power switches
+//=====================================
+fbSafePower1(bSwitchPower:= GVL.in_DI1_1_SwitchPower1_230V, bHasPower:= GVL.bFromSafeGr1_Power1_230V , bLightSelectPower=> GVL.out_DO1_1_LightSelectPower1, bSetSafetyPower=> GVL.bToSafeGr1_Power1_230V);
+fbSafePower2(bSwitchPower:= GVL.in_DI1_2_SwitchPower2_230V, bHasPower:= GVL.bFromSafeGr1_Power2_230V , bLightSelectPower=> GVL.out_DO1_2_LightSelectPower2, bSetSafetyPower=> GVL.bToSafeGr1_Power2_230V);
+//=====================================
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_Safety">
+      <LineId Id="590" Count="3" />
+      <LineId Id="780" Count="0" />
+      <LineId Id="594" Count="0" />
+      <LineId Id="781" Count="0" />
+      <LineId Id="595" Count="5" />
+      <LineId Id="782" Count="0" />
+      <LineId Id="601" Count="1" />
+      <LineId Id="784" Count="0" />
+      <LineId Id="760" Count="0" />
+      <LineId Id="785" Count="0" />
+      <LineId Id="603" Count="3" />
+      <LineId Id="786" Count="0" />
+      <LineId Id="608" Count="3" />
+      <LineId Id="688" Count="0" />
+      <LineId Id="616" Count="7" />
+      <LineId Id="787" Count="0" />
+      <LineId Id="624" Count="20" />
+      <LineId Id="722" Count="0" />
+      <LineId Id="645" Count="1" />
+      <LineId Id="649" Count="7" />
+      <LineId Id="789" Count="0" />
+      <LineId Id="657" Count="2" />
+      <LineId Id="790" Count="0" />
+      <LineId Id="742" Count="0" />
+      <LineId Id="791" Count="0" />
+      <LineId Id="743" Count="1" />
+      <LineId Id="746" Count="1" />
+      <LineId Id="745" Count="0" />
+      <LineId Id="739" Count="0" />
+      <LineId Id="748" Count="0" />
+      <LineId Id="660" Count="1" />
+      <LineId Id="792" Count="0" />
+      <LineId Id="662" Count="0" />
+      <LineId Id="793" Count="0" />
+      <LineId Id="663" Count="0" />
+      <LineId Id="708" Count="0" />
+      <LineId Id="711" Count="0" />
+      <LineId Id="794" Count="0" />
+      <LineId Id="709" Count="0" />
+      <LineId Id="714" Count="3" />
+      <LineId Id="720" Count="0" />
+      <LineId Id="718" Count="0" />
+      <LineId Id="749" Count="0" />
+      <LineId Id="719" Count="0" />
+      <LineId Id="712" Count="0" />
+      <LineId Id="710" Count="0" />
+      <LineId Id="664" Count="3" />
+      <LineId Id="721" Count="0" />
+      <LineId Id="668" Count="0" />
+      <LineId Id="704" Count="0" />
+      <LineId Id="683" Count="0" />
+      <LineId Id="669" Count="0" />
+      <LineId Id="684" Count="0" />
+      <LineId Id="670" Count="0" />
+      <LineId Id="750" Count="0" />
+      <LineId Id="759" Count="0" />
+      <LineId Id="751" Count="2" />
+      <LineId Id="671" Count="9" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

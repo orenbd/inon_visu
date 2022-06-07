@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="mxA_Motion" Id="{e2c31d3c-57c8-43e5-bd56-4f0388917b05}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM mxA_Motion
+VAR
+	fbKRC_ReadActualPosition		: KRC_ReadActualPosition;
+	fbKRC_ReadActualAxisPosition	: KRC_ReadActualAxisPosition;
+	fbKRC_ReadActualVelocity		: KRC_ReadActualVelocity;
+	
+	fbKRC_TouchUP					: KRC_TouchUP;
+	fbKRC_ReadTouchUPState			: KRC_ReadTouchUPState;
+	fbKRC_Jog						: KRC_Jog;
+	fbMC_MoveLinearAbsolute			: MC_MoveLinearAbsolute;
+	fbMC_MoveDirectAbsolute			: MC_MoveDirectAbsolute;
+	
+	fbKRC_WriteLoadData				: KRC_WriteLoadData;
+	
+	fbMxa_ValuesToCOORDSYS			: mxa_ValuesToCOORDSYS;
+	fbMxa_ValuesToAPO				: mxa_ValuesToAPO;
+	
+	nMove_PositonMode_Pos			: INT;
+	bMoveLinar_PositonMode			: BOOL;
+	bMovePTP_PositonMode			: BOOL;
+	
+	nJogMoveType					: INT := 0;
+	
+	bJogA1_P						: BOOL;
+	bJogA1_M						: BOOL;
+	bJogA2_P						: BOOL;
+	bJogA2_M						: BOOL;
+	bJogA3_P						: BOOL;
+	bJogA3_M						: BOOL;
+	bJogA4_P						: BOOL;
+	bJogA4_M						: BOOL;
+	bJogA5_P						: BOOL;
+	bJogA5_M						: BOOL;
+	bJogA6_P						: BOOL;
+	bJogA6_M						: BOOL;
+	
+	nState							: UDINT;
+	bExecAutoDemo					: BOOL;
+	fbAutoDemo						: FB_AutoDemo;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[mxA_TouchUp();
+mxA_Data();
+
+CASE nState OF
+0:	
+	mxA_Tool_Base();
+	mxa_Jog();
+	mxA_PositionMode();
+
+	mxA_LoadData();
+		 
+
+	
+	 IF bExecAutoDemo 
+		AND NOT fbKRC_Jog.Busy 
+		AND NOT fbMC_MoveDirectAbsolute.Busy 
+		AND NOT fbMC_MoveLinearAbsolute.Busy
+		AND NOT fbKRC_WriteLoadData.Busy THEN
+		 nState := 10;
+	 END_IF
+ 10:
+ 	fbAutoDemo(bExecute := bExecAutoDemo);
+	
+	IF NOT bExecAutoDemo AND NOT fbAutoDemo.bBusy THEN
+		nState := 0;
+	END_IF
+ END_CASE]]></ST>
+    </Implementation>
+    <Action Name="mxA_Data" Id="{a6fad9ea-bfd6-4481-977e-d32cd4ac5427}">
+      <Implementation>
+        <ST><![CDATA[
+fbKRC_ReadActualPosition(
+	AxisGroupIdx:= GVL.nAxisIndex , 
+	Valid=> , 
+	Position=> GVL.HMI_ActualCartPos, 
+	X=> , 
+	Y=> , 
+	Z=> , 
+	A=> , 
+	B=> , 
+	C=> , 
+	Status=> , 
+	Turn=> , 
+	Tool=> , 
+	Base=> , 
+	IPOMode=> );
+	
+fbKRC_ReadActualAxisPosition(
+	AxisGroupIdx:= GVL.nAxisIndex , 
+	Valid=> , 
+	AxisPosition=> GVL.HMI_ActualAxisPosition , 
+	A1=> , 
+	A2=> , 
+	A3=> , 
+	A4=> , 
+	A5=> , 
+	A6=> , 
+	E1=> , 
+	E2=> , 
+	E3=> , 
+	E4=> , 
+	E5=> , 
+	E6=> );	
+	
+fbKRC_ReadActualVelocity(AxisGroupIdx:= GVL.nAxisIndex , Valid=> , Value=> );]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="mxA_Jog" Id="{61207648-9457-4967-bcdd-3cf043ab4d8b}">
+      <Implementation>
+        <ST><![CDATA[fbKRC_Jog(
+	AxisGroupIdx:= GVL.nAxisIndex , 
+	MoveType:= nJogMoveType, 
+	Velocity:= 50, 
+	Acceleration:= 50, 
+	CoordinateSystem:= GVL.stCoordSys, 
+	Increment:= 0.0, 
+	A1_X_P:= bJogA1_P, 
+	A1_X_M:= bJogA1_M, 
+	A2_Y_P:= bJogA2_P, 
+	A2_Y_M:= bJogA2_M, 
+	A3_Z_P:= bJogA3_P, 
+	A3_Z_M:= bJogA3_M, 
+	A4_A_P:= bJogA4_P, 
+	A4_A_M:= bJogA4_M, 
+	A5_B_P:= bJogA5_P, 
+	A5_B_M:= bJogA5_M, 
+	A6_C_P:= bJogA6_P, 
+	A6_C_M:= bJogA6_M, 
+	E1_P:= , 
+	E1_M:= , 
+	E2_P:= , 
+	E2_M:= , 
+	E3_P:= , 
+	E3_M:= , 
+	E4_P:= , 
+	E4_M:= , 
+	E5_P:= , 
+	E5_M:= , 
+	E6_P:= , 
+	E6_M:= , 
+	Busy=> , 
+	Active=> , 
+	Done=> , 
+	Aborted=> , 
+	Error=> , 
+	ErrorID=> );]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="mxA_LoadData" Id="{bb0fac54-a933-464a-9d96-08c0ec29e9c9}">
+      <Implementation>
+        <ST><![CDATA[fbKRC_WriteLoadData(
+	AxisGroupIdx:= gvl.nAxisIndex , 
+	ExecuteCmd:= GVL.HMI_WriteLoadData, 
+	Tool:= GVL.HMI_TOOL, 
+	M:= GVL.HMI_LOAD, 
+	X:= , 
+	Y:= , 
+	Z:= , 
+	A:= , 
+	B:= , 
+	C:= , 
+	JX:= , 
+	JY:= , 
+	JZ:= , 
+	BufferMode:= eEM_Aborting, 
+	Busy=> , 
+	Done=> , 
+	Aborted=> , 
+	Error=> , 
+	ErrorID=> );]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="mxA_PositionMode" Id="{bde42268-1c3a-46cc-b39f-527cab164b6d}">
+      <Implementation>
+        <ST><![CDATA[fbMxa_ValuesToAPO(
+	PTP_MODE:= 0, 
+	CP_MODE:= 0, 
+	CPTP:= , 
+	CDIS:= , 
+	CORI:= , 
+	CVEL:= , 
+	APO=> GVL.stApprox);
+	
+//fbMC_MoveDirectAbsolute(
+//	AxisGroupIdx:= GVL.nAxisIndex, 
+//	Execute:= mxA_Motion.bMovePTP_PositonMode, 
+//	Position:= GVL.aPosArray[nMove_PositonMode_Pos].E6POS, 
+//	Velocity:= 50, 
+//	Acceleration:= 50, 
+//	CoordinateSystem:= GVL.aPosArray[nMove_PositonMode_Pos].COORDSYS, 
+//	Approximate:= GVL.stApprox , 
+//	QueueMode:= eEM_Aborting, 
+//	ComAcpt=> , 
+//	ComBusy=> , 
+//	Busy=> , 
+//	Active=> , 
+//	Done=> , 
+//	CommandAborted=> , 
+//	Error=> , 
+//	ErrorID=> );	
+	
+//fbMC_MoveLinearAbsolute(
+//	AxisGroupIdx:= GVL.nAxisIndex, 
+//	Execute:= mxA_Motion.bMoveLinar_PositonMode , 
+//	Position:= GVL.aPosArray[nMove_PositonMode_Pos].E6POS, 
+//	Velocity:= 1,
+//	Acceleration:= 2.3, 
+//	CoordinateSystem:= GVL.stCoordSys , 
+//	OriType:= 0, 
+//	Approximate:= GVL.stApprox , 
+//	QueueMode:= eEM_Aborting, 
+//	ComAcpt=> , 
+//	ComBusy=> , 
+//	Busy=> , 
+//	Active=> , 
+//	Done=> , 
+//	CommandAborted=> , 
+//	Error=> , 
+//	ErrorID=> );
+	]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="mxA_Tool_Base" Id="{2db5071a-1fdd-49dc-847b-c95ad97524f5}">
+      <Implementation>
+        <ST><![CDATA[fbMxa_ValuesToCOORDSYS(
+	Tool:= GVL.HMI_TOOL,
+	Base:= GVL.HMI_BASE, 
+	IPO_Mode:= 0,
+	COORDSYS=> GVL.stCoordSys);
+	
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="mxA_TouchUp" Id="{acc2fccd-0395-4c51-a87c-18ecaf3df09c}">
+      <Implementation>
+        <ST><![CDATA[
+fbKRC_ReadTouchUPState(
+	AxisGroupIdx:= gvl.nAxisIndex, 
+	Valid=> , 
+	TouchUP=> , 
+	Index=> , 
+	Error=> , 
+	ErrorID=> );	
+
+IF fbKRC_ReadTouchUPState.TouchUP THEN
+	fbKRC_TouchUP.Index := fbKRC_ReadTouchUPState.Index;
+ELSIF GVL.HMI_TouchUpStoreNow THEN
+	fbKRC_TouchUP.Index := GVL.HMI_TouchUpIndex;
+END_IF	
+	
+fbKRC_TouchUP(
+	PositionArray:= GVL.aPosArray , 
+	AxisGroupIdx:= GVL.nAxisIndex, 
+	ExecuteCmd:= fbKRC_ReadTouchUPState.TouchUP OR GVL.HMI_TouchUpStoreNow, 
+	Index:= , 
+	Done=> , 
+	Error=> , 
+	ErrorID=> );
+
+IF fbKRC_TouchUP.Done THEN
+	fbKRC_TouchUP(ExecuteCmd := FALSE, PositionArray := GVL.aPosArray);
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="mxA_Motion">
+      <LineId Id="106" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="3" Count="2" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="107" Count="1" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="61" Count="2" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="59" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="mxA_Motion.mxA_Data">
+      <LineId Id="22" Count="33" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="mxA_Motion.mxA_Jog">
+      <LineId Id="2" Count="35" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="mxA_Motion.mxA_LoadData">
+      <LineId Id="2" Count="18" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="mxA_Motion.mxA_PositionMode">
+      <LineId Id="89" Count="44" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="mxA_Motion.mxA_Tool_Base">
+      <LineId Id="2" Count="5" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="mxA_Motion.mxA_TouchUp">
+      <LineId Id="3" Count="7" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="11" Count="7" />
+      <LineId Id="23" Count="3" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

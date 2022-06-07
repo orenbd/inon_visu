@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_DiagKRC" Id="{a30ab94d-ae28-464e-bf37-4e58f278ee1a}">
+    <Declaration><![CDATA[TYPE ST_DiagKRC :
+STRUCT
+	bValid         		: BOOL;
+	nQueueCount         : INT;
+	bPosActValid        : BOOL;
+	bBrakeActive        : BOOL;
+	nSubmitHeartbeat    : INT;
+	nSubmitCyc_Act      : INT;
+	nSubmitCyc_Min      : INT;
+	nSubmitCyc_Max      : INT;
+	nSubmitCyc_Avg      : INT;
+	nActivePosOrderID   : DINT;
+	nActiveOrderIDB     : DINT;
+	nAvg_Duration       : DINT; 
+	nPCOSHeartbeat 	 	: INT;   
+	nPCOSCyc_Act   	 	: INT;
+	nPCOSCyc_Min    	: INT;
+	nPCOSCyc_Max  	  	: INT;
+	nPCOSCyc_Avg    	: INT;
+	nErrorID_RI         : E_MxA_RIError;
+	nErrorID_SI         : E_MxA_RIError;
+	nErrorID_PLC        : E_MxA_PLCError;
+	nErrorID_PCOS       : E_MxA_PCOSError;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

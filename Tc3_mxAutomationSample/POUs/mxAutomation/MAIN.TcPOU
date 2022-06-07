@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="MAIN" Id="{a839c8e6-2f23-47de-ba18-0e743981eb52}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	
+	fbKRC_ReadAxisGroup			: KRC_ReadAxisGroup;
+	fbKRC_WriteAxisGroup		: KRC_WriteAxisGroup;
+	fbKRC_Error					: KRC_Error;
+	fbKRC_Diag					: KRC_Diag;
+	fbKRC_AutomaticExternal		: KRC_AutomaticExternal;
+	fbKRC_Initialize			: KRC_Initialize;
+	fbKRC_AutoStart				: KRC_AutoStart;
+	fbKRC_SetOverride			: KRC_SetOverride;
+	Read_Axes_SW_Limts          : krc_readsoftend;
+	Write_Program_Abort			: krc_abort;
+		 
+	Move_Axes 					: MC_MoveAxisAbsolute;
+	Move_Linear 				: MC_MoveLinearAbsolute;
+	
+	bInitError					: BOOL;
+	nInitErrorID				: DINT;
+	bInitDone					: BOOL;
+	bAutoExternReset			: BOOL;
+	bAutostartDone				: BOOL;
+	bAutostartResetValid		: BOOL;
+	bAutostartDispActive		: BOOL;
+	
+	LinearTargetPOS				:E6POS;
+	LinearTargetCOORD			:COORDSYS;
+	inearTargetAPO				:APO;
+	
+	ReadKRCError 				:KRC_ReadKRCError;
+	NOT_INT_E_STOP				:BOOL;
+	
+
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbKRC_ReadAxisGroup(KRC4_Input := ADR(GVL.mxIn),AxisGroupIdx := GVL.nAxisIndex);
+
+A_StartUp();
+A_Diagnosis();
+
+mxA_Motion();
+
+move_Axes(
+	axisgroupidx := gvl_settings.App_GroupIndex,
+	execute := ,
+	axisposition:=,
+	velocity:= gvl_settings.App_Velocity ,
+	acceleration := gvl_settings.App_Acceleration,
+	approximate :=gvl_settings.App_APO ,
+	queuemode := gvl_settings.App_BufferMode );
+	
+	
+//gvl_settings.App_CoordSys.BASE:=1;
+//gvl_settings.app_coordsys.TOOL:=1;
+//gvl_settings.app_coordsys.IPO_Mode:=0;
+
+move_Linear(
+		axisgroupidx := gvl_settings.App_GroupIndex ,
+		execute := ,
+		position := LinearTargetPOS ,
+		velocity := gvl_settings.App_Velocity ,
+		acceleration :=gvl_Settings.App_Acceleration ,
+		CoordinateSystem := ,///gvl_settings.App_CoordSys,
+		oritype :=0 ,
+		approximate:= ,//gvl_settings.App_APO,
+		queuemode :=2  ,
+		errorid => );
+
+		
+Read_Axes_Velocity();	
+
+
+ReadKRCError(
+	AxisGroupIdx:= gvl_settings.App_GroupIndex , 
+	ExecuteCmd:= , 
+	Offset:= , 
+	Done=> , 
+	Error=> , 
+	ErrorID=> , 
+	STOPMESS=> , 
+	MessageCount=> , 
+	Message1=> , 
+	Message2=> , 
+	Message3=> , 
+	Message4=> , 
+	Message5=> , 
+	Message6=> , 
+	Message7=> , 
+	Message8=> , 
+	Message9=> , 
+	Message10=> );
+	
+fbKRC_WriteAxisGroup(AxisGroupIdx := GVL.nAxisIndex, KRC4_Output:= ADR(GVL.mxOut)); 
+
+
+//--read windows counter and convert to string---
+GVL_PLC.Int_windowsCounter := f_getsystemtime();
+GVL_PLC.Str_windowsCounter := ULINT_TO_STRING(ABS(GVL_PLC.Int_windowsCounter));
+
+
+//--read windows Date and time---
+GVL_PLC.ReadWindowsTime(
+	sNetID:= , 
+	bEnable:=TRUE , 
+	dwCycle:= 1, 
+	dwOpt:= , 
+	tTimeout:= , 
+	bValid=> , 
+	systemTime=>gvl_plc.Time_SystemTime,
+	tzID=> );
+	
+
+gvl_plc.String_WindowsTime := systemtime_to_string(gvl_plc.Time_SystemTime);
+
+]]></ST>
+    </Implementation>
+    <Action Name="A_Diagnosis" Id="{9ca048e3-01df-4bd6-a2dc-c5c24eae2ab5}">
+      <Implementation>
+        <ST><![CDATA[fbKRC_Error(
+	AxisGroupIdx:= GVL.nAxisIndex, 
+	MessageReset:=  ,//GVL.HMI_MessageReset, 
+	Error=> ,//GVL.HMI_Error_General , 
+	ErrorID=> ,//GVL.HMI_Error_General_ID, 
+	NoHeartbeatKRC=> , 
+	NoHeartbeatPCOS=> , 
+	NotOnline=> , 
+	NotInitialized=> , 
+	NoOpModeExt=> , 
+	NoMoveEnable=> , 
+	UserSafeNotOK=> , 
+	KrcErrorActive=> , 
+	DrivesNotReady=> , 
+	NoProgActive=> );	
+
+GVL.HMI_Error_SINT := NOT  fbKRC_Error.NoHeartbeatKRC;
+GVL.HMI_Error_ProConOS := NOT fbKRC_Error.NoHeartbeatPCOS;
+GVL.HMI_DrivesNotReady := NOT fbKRC_Error.DrivesNotReady;
+
+
+
+	
+fbKRC_Diag(
+	AxisGroupIdx:= GVL.nAxisIndex, 
+	ShowTrace:= FALSE, 
+	MaxSubmitCycle:= , 
+	Valid=> , 
+	QueueCount=> , 
+	PosActValid=> , 
+	BrakeActive=> , 
+	SubmitHeartbeat=> , 
+	SubmitCyc_Act=> , 
+	SubmitCyc_Min=> , 
+	SubmitCyc_Max=> , 
+	SubmitCyc_Avg=> , 
+	ActivePosOrderID=> , 
+	ActiveOrderIDB=> , 
+	Avg_Duration=> , 
+	ProconosHeartbeat=> , 
+	ProconosCyc_Act=> , 
+	ProconosCyc_Min=> , 
+	ProconosCyc_Max=> , 
+	ProconosCyc_Avg=> , 
+	ErrorID_RI=> , 
+	ErrorID_SI=> , 
+	ErrorID_PLC=> , 
+	ErrorID_PCOS=> , 
+	Error=> , 
+	ErrorID=> );	
+	
+	
+	read_axes_sw_limts(
+		axisgroupidx :=gvl_settings.App_GroupIndex ,
+		executecmd:= ,
+		done :=,
+		a1_min := ,
+		a1_max := ,
+		a2_min := ,
+		a2_max := ,
+		a3_min := ,
+		a3_max := ,
+		a4_min := ,
+		a4_max := ,
+		a5_min := ,
+		a5_max := ,
+		a6_min := ,
+		a6_max := ,
+		error := ,
+		errorID:=);
+		
+		
+		
+		
+		]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_StartUp" Id="{4cdb1bb2-744b-4a40-9fae-356b32f910fb}">
+      <Implementation>
+        <ST><![CDATA[fbKRC_Initialize(
+	AxisGroupIdx:= gvl.nAxisIndex, 
+	Done=> bInitDone , 
+	Error=> bInitError, 
+	ErrorID=>  nInitErrorID, 
+	KRC_Serial=>, 
+	KRC_Major=>, 
+	KRC_Minor=> , 
+	KRC_Revision=>, 
+	PLC_Major=> , 
+	PLC_Minor=>, 
+	PLC_Revision=>);
+	
+fbKRC_AutomaticExternal(
+	AxisGroupIdx:= GVL.nAxisIndex, 
+	MOVE_ENABLE:=,//GVL.in_MOVE_ENABLE,//true 
+	CONF_MESS:=GVL.in_CONF_MESS ,//GVL.in_CONF_MESS, 
+	DRIVES_ON:= ,//GVL.in_DRIVES_ON, 
+	DRIVES_OFF:= ,//=GVL.in_DRIVES_OFF ,//TRUE , 
+	EXT_START:=GVL.in_EXT_START , //GVL.in_EXT_START, 
+	RESET:= ,//bAutoExternReset, 
+	ENABLE_T1:= ,//GVL.in_ENABLE_T1 ,//TRUE, 
+	ENABLE_T2:= ,//GVL.in_ENABLE_T2 ,//TRUE, 
+	ENABLE_AUT:= ,// GVL.in_ENABLE_AUT,//,TRUE, 
+	ENABLE_EXT:=  ,//GVL.in_ENABLE_EXT,//TRUE, 
+	Valid=> , 
+	RC_RDY1=> , 
+	ALARM_STOP=>GVL.out_ALARM_STOP , 
+	USER_SAFE=> GVL.out_USER_SAFE, 
+	PERI_RDY=> , 
+	ROB_CAL=> , 
+	IO_ACTCONF=> , 
+	STOPMESS=> , 
+	INT_E_STOP=> , 
+	PRO_ACT=> , 
+	APPL_RUN=> , 
+	PRO_MOVE=> , 
+	ON_PATH=> , 
+	NEAR_POSRET=> , 
+	ROB_STOPPED=> , 
+	T1=> , 
+	T2=> , 
+	AUT=> , 
+	EXT=>  );
+//GVL.HMI_AutoEXT);	
+	
+NOT_INT_E_STOP := NOT(MAIN.fbKRC_AutomaticExternal.INT_E_STOP);	
+
+fbKRC_AutoStart(
+	AxisGroupIdx:= GVL.nAxisIndex , 
+	ExecuteReset:=  ,//GVL.HMI_AutoStart, 
+	Busy=> , 
+	Done=> bAutostartDone, 
+	DispActive=> bAutostartDispActive, 
+	ResetValid=> bAutostartResetValid , 
+	Error=> , 
+	ErrorID=> );
+	
+fbKRC_SetOverride(
+	AxisGroupIdx:=GVL.nAxisIndex , 
+	Override:= GVL.nOverrideGlobal , 
+	Valid=> , 
+	ActualOverride=> , 
+	Error=> , 
+	ErrorID=> );	
+	
+write_program_abort(
+		axisgroupidx :=gvl_settings.App_GroupIndex,
+		executecmd := ,
+		);
+		
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="MAIN">
+      <LineId Id="209" Count="1" />
+      <LineId Id="354" Count="13" />
+      <LineId Id="381" Count="0" />
+      <LineId Id="383" Count="1" />
+      <LineId Id="382" Count="0" />
+      <LineId Id="385" Count="0" />
+      <LineId Id="368" Count="9" />
+      <LineId Id="386" Count="1" />
+      <LineId Id="378" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="424" Count="1" />
+      <LineId Id="427" Count="17" />
+      <LineId Id="423" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="229" Count="21" />
+      <LineId Id="74" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.A_Diagnosis">
+      <LineId Id="2" Count="48" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="62" Count="12" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="57" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.A_StartUp">
+      <LineId Id="2" Count="43" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="48" Count="16" />
+      <LineId Id="67" Count="5" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

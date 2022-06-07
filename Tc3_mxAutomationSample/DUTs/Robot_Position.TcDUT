@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="Robot_Position" Id="{74e8f1f8-d38a-4ef7-b008-5070d342faca}">
+    <Declaration><![CDATA[TYPE Robot_Position :
+	
+
+STRUCT
+	
+p1:REAL;
+p2:REAL;
+p3:REAL;
+p4:REAL;
+p5:REAL;
+p6:REAL;
+
+END_STRUCT
+
+
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

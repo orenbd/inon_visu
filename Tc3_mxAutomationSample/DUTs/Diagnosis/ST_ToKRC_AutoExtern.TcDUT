@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_ToKRC_AutoExtern" Id="{d23747a1-7419-41fc-8698-fc96b13bb00c}">
+    <Declaration><![CDATA[TYPE ST_ToKRC_AutoExtern :
+STRUCT
+	bPgNo_FBit			: BOOL;	//0.0
+	bPgNo_Bit1			: BOOL;	//0.1
+	bPgNo_Bit2			: BOOL;	//0.2
+	bPgNo_Bit3			: BOOL;	//0.3
+	bPgNo_Bit4			: BOOL;	//0.4
+	bPgNo_Bit5			: BOOL;	//0.5
+	bPgNo_Bit6			: BOOL;	//0.6
+	bPgNo_Bit7			: BOOL;	//0.7
+	
+	bPgNo_Parity		: BOOL;	//1.0
+	bPgNo_Valid			: BOOL;	//1.1
+	bExtStart			: BOOL;	//1.2
+	bMoveEnable			: BOOL;	//1.3
+	bConfMess			: BOOL;	//1.4
+	bDrivesOff			: BOOL;	//1.5
+	bDrivesOn			: BOOL;	//1.6
+	bMasteringTestReqExt: BOOL;	//1.7
+	
+	bBrakeTestReqExt	: BOOL;	//2.0
+	bReserve_2_1_3_7	: ARRAY[1..15] OF BOOL; //2.1 - 3.7
+	
+	bReset				: BOOL;	//4.0	choose cell program with rising edge
+	bBrake				: BOOL;	//4.1	brake command (KRC interrupt)
+	bBrakeF				: BOOL;	//4.2	brakeF command (KRC interrupt)
+	bReleaseBrake		: BOOL;	//4.3	release brake after brake command
+	bShowTrace			: BOOL;	//4.4	show diag messages in message window
+	bMessageReset		: BOOL;	//4.5	message aknowledge of error messages of mxAutomation package
+	bReserve_4_6		: BOOL;	//4.6
+	bWriteOut_1to8		: BOOL;	//4.7	write request for outputs 1 to 8
+	
+	bOutVal1			: BOOL;	//5.0	setvalue for $OUT[1]
+	bOutVal2			: BOOL;	//5.1	setvalue for $OUT[2]
+	bOutVal3			: BOOL;	//5.2	setvalue for $OUT[3]
+	bOutVal4			: BOOL;	//5.3	setvalue for $OUT[4]
+	bOutVal5			: BOOL;	//5.4	setvalue for $OUT[5]
+	bOutVal6			: BOOL;	//5.5	setvalue for $OUT[6]
+	bOutVal7			: BOOL;	//5.6	setvalue for $OUT[7]
+	bOutVal8			: BOOL;	//5.7	setvalue for $OUT[8]
+	
+	bReserve_6_0_7_7	: ARRAY[1..16] OF BOOL; //6.0 - 7.7
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

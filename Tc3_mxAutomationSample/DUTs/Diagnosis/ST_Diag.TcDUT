@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_Diag" Id="{8c745fc4-f56c-482d-91cc-9dbcd33fd0ce}">
+    <Declaration><![CDATA[TYPE ST_Diag :
+STRUCT
+	//KRC diag
+	stDiagKRC			: ST_DiagKRC;	
+	bDiagKRCError       : BOOL;
+	nDiagKRCErrorID     : E_MxA_Error;
+		
+	//MXA error
+	bMXAError           : BOOL;
+	nMXAErrorID         : E_MxA_Error;
+	
+	//MXA status
+	nMXAStatus       	: E_MxAStatus;
+	bMXAStatusError     : BOOL;
+	nMXAStatusErrorID   : E_MxA_Error;
+
+	//KRC error
+	stErrorKRC			: ST_ErrorKRC;
+	bErrorKRCDone       : BOOL;
+	bErrorKRCError      : BOOL;
+	nErrorKRCErrorID    : E_MxA_Error;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

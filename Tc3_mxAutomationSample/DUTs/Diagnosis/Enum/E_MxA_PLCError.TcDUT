@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="E_MxA_PLCError" Id="{b10a1dff-e946-49c2-af15-cad4354c4f44}">
+    <Declaration><![CDATA[TYPE E_MxA_PLCError :
+(
+	eMxA_OK 				:= 0, 	
+	eMxA_InternalError		:= 501,
+	eMxA_InvBufferMode,
+	eMxA_InvMxaVer,
+	eMxA_InvOverride,
+	eMxA_InvGrpRefIndexReached,
+	eMxA_InvGrpPrefIndex,
+	eMxA_InvFBOrder,
+	eMxA_ConnectNotInit,
+	eMxA_NoConnectToKrc,
+	eMxA_TmoutHeartbeatFromKrc,
+	eMxA_TmoutCmdItfBlocked,
+	eMxA_InvChkSumKrcToPlc,
+	eMxA_InvPosIndex,
+	eMxA_PosActInv,
+	eMxA_PNetError,
+	eMxA_ENetIpError,
+	eMxA_InvCmdSize
+) DINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_AutoExtern" Id="{ddd7f801-e336-4d51-be1c-c25027c58af4}">
+    <Declaration><![CDATA[TYPE ST_AutoExtern :
+STRUCT
+	bValid				: bool;
+	bRcReady			: BOOL;
+	bAlarmStop			: BOOL;
+	bUserSAFE			: BOOL;
+	bPeriReady			: BOOL;
+	bRobCal				: BOOL;
+	bIoActConf			: BOOL;
+	bStopMess			: BOOL;
+	bIntEStop			: BOOL;
+	bProAct				: BOOL;
+	bApplRun			: BOOL;
+	bProMove			: BOOL;
+	bOnPath				: BOOL;
+	bNearPosRet			: BOOL;
+	bRobStopped			: BOOL;
+	bT1					: BOOL;
+	bT2					: BOOL;
+	bAUT				: BOOL;
+	bEXT				: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

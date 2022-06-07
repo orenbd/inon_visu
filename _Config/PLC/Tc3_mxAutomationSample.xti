@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.25" ClassName="CNestedPlcProjDef">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{AE06D078-CFE0-F0D5-6B2A-ADE80393821A}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..63] OF DWORD</Name>
+			<BitSize>2048</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000007}">DWORD</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>64</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{8053056D-A99E-A296-920F-7F9006A830F6}" Namespace="Tc3_mxAutomationV3_0" AutoDeleteType="true">COORDSYS</Name>
+			<Comment><![CDATA[Coordinate system to which the Cartesian coordinates of the end position refer in a KRC_Move or KRC_Jog motion command]]></Comment>
+			<BitSize>48</BitSize>
+			<SubItem>
+				<Name>TOOL</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>BASE</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>16</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>IPO_Mode</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{92809658-D709-EA03-491A-AAE833CFC86C}" Namespace="Tc3_mxAutomationV3_0" AutoDeleteType="true">E6POS</Name>
+			<Comment><![CDATA[Cartesian coordinates of the end position for a KRC_Move or KRC_Jog motion command]]></Comment>
+			<BitSize>416</BitSize>
+			<SubItem>
+				<Name>X</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Y</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Z</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>A</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>96</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>B</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>C</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>160</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Status</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Turn</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000006}">INT</Type>
+				<BitSize>16</BitSize>
+				<BitOffs>208</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E1</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>224</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E2</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E3</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>288</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E4</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E5</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>352</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E6</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{70E56EFC-F82F-F54D-DCA4-D2C3DA32CC10}" Namespace="Tc3_mxAutomationV3_0" AutoDeleteType="true">E6AXIS</Name>
+			<Comment><![CDATA[Angular values or translation values of the axes in an axis group for a KRC_MoveAxis motion command]]></Comment>
+			<BitSize>384</BitSize>
+			<SubItem>
+				<Name>A1</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>A2</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>A3</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>A4</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>96</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>A5</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>128</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>A6</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>160</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E1</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>192</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E2</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>224</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E3</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E4</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>288</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E5</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>320</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E6</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>352</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{697E8B87-6179-C49B-6926-FA4249A79FE1}" Namespace="Tc3_mxAutomationV3_0" AutoDeleteType="true">POSITION</Name>
+			<BitSize>864</BitSize>
+			<SubItem>
+				<Name>COORDSYS</Name>
+				<Type GUID="{8053056D-A99E-A296-920F-7F9006A830F6}" Namespace="Tc3_mxAutomationV3_0">COORDSYS</Type>
+				<BitSize>48</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E6POS</Name>
+				<Type GUID="{92809658-D709-EA03-491A-AAE833CFC86C}" Namespace="Tc3_mxAutomationV3_0">E6POS</Type>
+				<BitSize>416</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>E6AXIS</Name>
+				<Type GUID="{70E56EFC-F82F-F54D-DCA4-D2C3DA32CC10}" Namespace="Tc3_mxAutomationV3_0">E6AXIS</Type>
+				<BitSize>384</BitSize>
+				<BitOffs>480</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{BBCA85AA-65A9-A066-6F56-D82B9E02371A}" Namespace="Tc3_mxAutomationV3_0" AutoDeleteType="true">POSITION_ARRAY</Name>
+			<BitSize>86400</BitSize>
+			<BaseType GUID="{697E8B87-6179-C49B-6926-FA4249A79FE1}" Namespace="Tc3_mxAutomationV3_0">POSITION</BaseType>
+			<ArrayInfo>
+				<LBound>1</LBound>
+				<Elements>100</Elements>
+			</ArrayInfo>
+			<Properties>
+				<Property>
+					<Name>hide</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{68A38413-BD72-87A7-A18A-88153E82B935}" AutoDeleteType="true">Robot_FW</Name>
+			<BitSize>96</BitSize>
+			<SubItem>
+				<Name>FW_Version</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FW_Major</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>32</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>FW_Minor</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000009}">DINT</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+			</SubItem>
+		</DataType>
+	</DataTypes>
+	<Project GUID="{D0C85E19-E80B-44D2-8E6C-A8DA05C2E375}" Name="Tc3_mxAutomationSample" PrjFilePath="..\..\Tc3_mxAutomationSample\Tc3_mxAutomationSample.plcproj" TmcFilePath="..\..\Tc3_mxAutomationSample\Tc3_mxAutomationSample.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Tc3_mxAutomationSample\Tc3_mxAutomationSample.tmc">
+			<Name>Tc3_mxAutomationSample Instance</Name>
+			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Vars VarGrpType="1">
+				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>GVL.mxIn</Name>
+					<Comment><![CDATA[=====================================
+ mxAutomation
+=====================================	]]></Comment>
+					<Type GUID="{AE06D078-CFE0-F0D5-6B2A-ADE80393821A}">ARRAY [0..63] OF DWORD</Type>
+				</Var>
+				<Var>
+					<Name>GVL_SAFETY.ComErr</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_SAFETY.EMO_Diag</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_SAFETY.PowerIsOn</Name>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
+			<Vars VarGrpType="2" AreaNo="1">
+				<Name>PlcTask Outputs</Name>
+				<Var>
+					<Name>GVL.mxOut</Name>
+					<Type GUID="{AE06D078-CFE0-F0D5-6B2A-ADE80393821A}">ARRAY [0..63] OF DWORD</Type>
+				</Var>
+				<Var>
+					<Name>GVL_SAFETY.Ack</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_SAFETY.Run</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL_SAFETY.Restart</Name>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
+			<Vars VarGrpType="8" AreaNo="4">
+				<Name>PlcTask Retains</Name>
+				<Var>
+					<Name>GVL.aPosArray</Name>
+					<Type GUID="{BBCA85AA-65A9-A066-6F56-D82B9E02371A}" Namespace="Tc3_mxAutomationV3_0">POSITION_ARRAY</Type>
+					<InOut>7</InOut>
+				</Var>
+				<Var>
+					<Name>GVL.LinearArray</Name>
+					<Type GUID="{BBCA85AA-65A9-A066-6F56-D82B9E02371A}" Namespace="Tc3_mxAutomationV3_0">POSITION_ARRAY</Type>
+					<InOut>7</InOut>
+				</Var>
+				<Var>
+					<Name>GVL.kuka_fw</Name>
+					<Type GUID="{68A38413-BD72-87A7-A18A-88153E82B935}">Robot_FW</Type>
+					<InOut>7</InOut>
+				</Var>
+			</Vars>
+			<Contexts>
+				<Context>
+					<Id NeedCalleeCall="true">0</Id>
+					<Name>PlcTask</Name>
+					<ManualConfig>
+						<OTCID>#x02010030</OTCID>
+					</ManualConfig>
+					<Priority>20</Priority>
+					<CycleTime>10000000</CycleTime>
+				</Context>
+				<Context>
+					<Id NeedCalleeCall="true">1</Id>
+					<Name>VISU_TASK</Name>
+					<ManualConfig>
+						<OTCID>#x02010040</OTCID>
+					</ManualConfig>
+					<Priority>30</Priority>
+					<CycleTime>50000000</CycleTime>
+				</Context>
+			</Contexts>
+			<TaskPouOids>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
+				<TaskPouOid Prio="30" OTCID="#x08502002"/>
+			</TaskPouOids>
+		</Instance>
+	</Project>
+	<Mappings>
+		<OwnerA Name="Tc3_mxAutomationSample Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 2 (EK1200)^Term 3 (EL1918)">
+				<Link VarA="PlcTask Inputs^GVL_SAFETY.ComErr" VarB="StandardInputs^Standard Out Var 15" Size="1"/>
+				<Link VarA="PlcTask Inputs^GVL_SAFETY.PowerIsOn" VarB="StandardInputs^Standard Out Var 42" Size="1"/>
+				<Link VarA="PlcTask Outputs^GVL_SAFETY.Ack" VarB="StandardOutputs^Standard In Var 1" Size="1"/>
+				<Link VarA="PlcTask Outputs^GVL_SAFETY.Restart" VarB="StandardOutputs^Standard In Var 18" Size="1"/>
+				<Link VarA="PlcTask Outputs^GVL_SAFETY.Run" VarB="StandardOutputs^Standard In Var 14" Size="1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 3 (EtherCAT)^Box 1 (KRC4 secondary EL6695-1001)">
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 0" Size="32"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 1" Size="32" OffsA="32"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 10" Size="32" OffsA="320"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 11" Size="32" OffsA="352"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 12" Size="32" OffsA="384"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 13" Size="32" OffsA="416"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 14" Size="32" OffsA="448"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 15" Size="32" OffsA="480"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 16" Size="32" OffsA="512"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 17" Size="32" OffsA="544"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 18" Size="32" OffsA="576"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 19" Size="32" OffsA="608"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 2" Size="32" OffsA="64"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 20" Size="32" OffsA="640"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 21" Size="32" OffsA="672"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 22" Size="32" OffsA="704"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 23" Size="32" OffsA="736"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 24" Size="32" OffsA="768"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 25" Size="32" OffsA="800"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 26" Size="32" OffsA="832"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 27" Size="32" OffsA="864"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 28" Size="32" OffsA="896"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 29" Size="32" OffsA="928"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 3" Size="32" OffsA="96"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 30" Size="32" OffsA="960"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 31" Size="32" OffsA="992"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 32" Size="32" OffsA="1024"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 33" Size="32" OffsA="1056"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 34" Size="32" OffsA="1088"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 35" Size="32" OffsA="1120"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 36" Size="32" OffsA="1152"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 37" Size="32" OffsA="1184"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 38" Size="32" OffsA="1216"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 39" Size="32" OffsA="1248"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 4" Size="32" OffsA="128"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 40" Size="32" OffsA="1280"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 41" Size="32" OffsA="1312"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 42" Size="32" OffsA="1344"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 43" Size="32" OffsA="1376"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 44" Size="32" OffsA="1408"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 45" Size="32" OffsA="1440"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 46" Size="32" OffsA="1472"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 47" Size="32" OffsA="1504"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 48" Size="32" OffsA="1536"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 49" Size="32" OffsA="1568"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 5" Size="32" OffsA="160"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 50" Size="32" OffsA="1600"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 51" Size="32" OffsA="1632"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 52" Size="32" OffsA="1664"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 53" Size="32" OffsA="1696"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 54" Size="32" OffsA="1728"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 55" Size="32" OffsA="1760"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 56" Size="32" OffsA="1792"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 57" Size="32" OffsA="1824"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 58" Size="32" OffsA="1856"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 59" Size="32" OffsA="1888"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 6" Size="32" OffsA="192"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 60" Size="32" OffsA="1920"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 61" Size="32" OffsA="1952"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 62" Size="32" OffsA="1984"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 63" Size="32" OffsA="2016"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 7" Size="32" OffsA="224"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 8" Size="32" OffsA="256"/>
+				<Link VarA="PlcTask Inputs^GVL.mxIn" VarB="Module 3 (Default IO)^Std. In (256 Bytes)^Input DWORD 9" Size="32" OffsA="288"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 0" Size="32"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 1" Size="32" OffsA="32"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 10" Size="32" OffsA="320"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 11" Size="32" OffsA="352"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 12" Size="32" OffsA="384"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 13" Size="32" OffsA="416"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 14" Size="32" OffsA="448"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 15" Size="32" OffsA="480"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 16" Size="32" OffsA="512"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 17" Size="32" OffsA="544"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 18" Size="32" OffsA="576"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 19" Size="32" OffsA="608"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 2" Size="32" OffsA="64"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 20" Size="32" OffsA="640"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 21" Size="32" OffsA="672"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 22" Size="32" OffsA="704"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 23" Size="32" OffsA="736"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 24" Size="32" OffsA="768"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 25" Size="32" OffsA="800"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 26" Size="32" OffsA="832"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 27" Size="32" OffsA="864"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 28" Size="32" OffsA="896"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 29" Size="32" OffsA="928"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 3" Size="32" OffsA="96"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 30" Size="32" OffsA="960"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 31" Size="32" OffsA="992"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 32" Size="32" OffsA="1024"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 33" Size="32" OffsA="1056"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 34" Size="32" OffsA="1088"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 35" Size="32" OffsA="1120"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 36" Size="32" OffsA="1152"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 37" Size="32" OffsA="1184"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 38" Size="32" OffsA="1216"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 39" Size="32" OffsA="1248"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 4" Size="32" OffsA="128"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 40" Size="32" OffsA="1280"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 41" Size="32" OffsA="1312"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 42" Size="32" OffsA="1344"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 43" Size="32" OffsA="1376"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 44" Size="32" OffsA="1408"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 45" Size="32" OffsA="1440"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 46" Size="32" OffsA="1472"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 47" Size="32" OffsA="1504"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 48" Size="32" OffsA="1536"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 49" Size="32" OffsA="1568"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 5" Size="32" OffsA="160"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 50" Size="32" OffsA="1600"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 51" Size="32" OffsA="1632"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 52" Size="32" OffsA="1664"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 53" Size="32" OffsA="1696"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 54" Size="32" OffsA="1728"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 55" Size="32" OffsA="1760"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 56" Size="32" OffsA="1792"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 57" Size="32" OffsA="1824"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 58" Size="32" OffsA="1856"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 59" Size="32" OffsA="1888"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 6" Size="32" OffsA="192"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 60" Size="32" OffsA="1920"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 61" Size="32" OffsA="1952"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 62" Size="32" OffsA="1984"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 63" Size="32" OffsA="2016"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 7" Size="32" OffsA="224"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 8" Size="32" OffsA="256"/>
+				<Link VarA="PlcTask Outputs^GVL.mxOut" VarB="Module 3 (Default IO)^Std. Out (256 Bytes)^Output DWORD 9" Size="32" OffsA="288"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmItem>

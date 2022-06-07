@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_ToKRC_P1" Id="{32521f76-9554-4e9b-a669-9ed9944396a4}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE ST_ToKRC_P1 :
+STRUCT
+	nControlLw			: LWORD;	//0
+	nHeartbeat			: BYTE;		//8		heartbeat KRC and ProConOS, 1..254
+	nOverride			: BYTE;		//9		override of extern
+	nPlcVersionMajor	: BYTE;		//10	major PLC version
+	nPlcVersionMinor	: BYTE;		//11	minor PLC version
+	nSR_Order1_IdRet	: DINT;		//12	order id for acknowledge of status feedback
+	nSR_Order2_IdRet	: DINT;		//16	order id for acknowledge of status feedback
+	nSR_Order3_IdRet	: DINT;		//20	order id for acknowledge of status feedback
+	nSR_Order4_IdRet	: DINT;		//24	order id for acknowledge of status feedback
+	nSR_Order5_IdRet	: DINT;		//28	order id for acknowledge of status feedback
+	nSR_Order6_IdRet	: DINT;		//32	order id for acknowledge of status feedback
+	nSR_Order7_IdRet	: DINT;		//36	order id for acknowledge of status feedback
+	nSR_Order8_IdRet	: DINT;		//40	order id for acknowledge of status feedback
+	nSR_Order9_IdRet	: DINT;		//44	order id for acknowledge of status feedback
+	nSR_Order10_IdRet	: DINT;		//48	order id for acknowledge of status feedback
+	nSR_Order1_State	: BYTE;		//52	order id for acknowledge of status feedback
+	nSR_Order2_State	: BYTE;		//53	order id for acknowledge of status feedback
+	nSR_Order3_State	: BYTE;		//54	order id for acknowledge of status feedback
+	nSR_Order4_State	: BYTE;		//55	order id for acknowledge of status feedback
+	nSR_Order5_State	: BYTE;		//56	order id for acknowledge of status feedback
+	nSR_Order6_State	: BYTE;		//57	order id for acknowledge of status feedback
+	nSR_Order7_State	: BYTE;		//58	order id for acknowledge of status feedback
+	nSR_Order8_State	: BYTE;		//59	order id for acknowledge of status feedback
+	nSR_Order9_State	: BYTE;		//60	order id for acknowledge of status feedback
+	nSR_Order10_State	: BYTE;		//61	order id for acknowledge of status feedback
+	nTransmissionNO1	: BYTE;		//62	1..254: transmission number, 0: no active transmission
+	nTransmissionType	: BYTE;		//63	1: Part 1/1, 2: Part 1/2, 3: Part 2/2, 4: Part 1/3, 5: Part 2/3, 6: Part 3/3
+	nOrderId			: DINT;		//64	unique order id, incr. with rising edge on bExecute on FB, 1..2^31-1
+	nCmdId				: BYTE;		//68	command id
+	eExecMode			: E_ExecMode;//69	Enum Byte: 0: Submit (direct execution in submit), 1: aborting, 2: buffered
+	nCheckSum			: DWORD;	//70	XOR checksum of command data
+	nBoolValues1		: WORD;		//74	bool parameter values 1-15, 16-30, 31-45
+	nCmdParInt1			: DINT;		//76	integer parameter 1, 16, 31
+	nCmdParInt2			: DINT;		//80	integer parameter 2, 17, 32
+	nCmdParInt3			: DINT;		//84	integer parameter 3, 18, 33
+	nCmdParInt4			: DINT;		//88	integer parameter 4, 19, 34
+	nCmdParInt5			: DINT;		//92	integer parameter 5, 20, 35
+	nCmdParInt6			: DINT;		//96	integer parameter 6, 21, 36
+	nCmdParInt7			: DINT;		//100	integer parameter 7, 22, 37
+	nCmdParInt8			: DINT;		//104	integer parameter 8, 23, 38
+	nCmdParInt9			: DINT;		//108	integer parameter 9, 24, 39
+	nCmdParInt10		: DINT;		//112	integer parameter 10, 25, 40
+	nCmdParInt11		: DINT;		//116	integer parameter 11, 26, 41
+	nCmdParInt12		: DINT;		//120	integer parameter 12, 27, 42
+	nCmdParInt13		: DINT;		//124	integer parameter 13, 28, 43
+	nCmdParInt14		: DINT;		//128	integer parameter 14, 29, 44
+	nCmdParInt15		: DINT;		//132	integer parameter 15, 30, 45
+	fCmdParReal1		: REAL;		//136	real parameter 1, 16, 31
+	fCmdParReal2		: REAL;		//140	real parameter 2, 17, 32
+	fCmdParReal3		: REAL;		//144	real parameter 3, 18, 33
+	fCmdParReal4		: REAL;		//148	real parameter 4, 19, 34
+	fCmdParReal5		: REAL;		//152	real parameter 5, 20, 35
+	fCmdParReal6		: REAL;		//156	real parameter 6, 21, 36
+	fCmdParReal7		: REAL;		//160	real parameter 7, 22, 37
+	fCmdParReal8		: REAL;		//164	real parameter 8, 23, 38
+	fCmdParReal9		: REAL;		//168	real parameter 9, 24, 39
+	fCmdParReal10		: REAL;		//172	real parameter 10, 25, 40
+	fCmdParReal11		: REAL;		//176	real parameter 11, 26, 41
+	fCmdParReal12		: REAL;		//180	real parameter 12, 27, 42
+	fCmdParReal13		: REAL;		//184	real parameter 13, 28, 43
+	fCmdParReal14		: REAL;		//188	real parameter 14, 29, 44
+	fCmdParReal15		: REAL;		//192	real parameter 15, 30, 45
+	nTransmissionNO2	: BYTE;		//196	transmission number for consistency check, need to match with nTransmissionNO1
+	nReserved197		: ARRAY [1..59] OF BYTE;	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

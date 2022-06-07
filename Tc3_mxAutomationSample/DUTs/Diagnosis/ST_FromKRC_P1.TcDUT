@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_FromKRC_P1" Id="{5a83f9b4-1e70-4108-a362-1f4f6a081221}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE ST_FromKRC_P1 :
+STRUCT
+	nStatusDw 			: DWORD;	//0
+	nHeartbeatSubmit 	: BYTE;		//4		heartbeat from KRC 1..245
+	nInVal_1_8			: BYTE;		//5		Actual Value of Inputs $IN[1]..$IN[8]
+	nTouchUpPosNo		: INT;		//6		Position Number for TouchUp (UserTech)
+	nSR_Order1_ID		: DINT;		//8		Order ID for feedback of status information
+	nSR_Order2_ID		: DINT;		//12	Order ID for feedback of status information
+	nSR_Order3_ID		: DINT;		//16	Order ID for feedback of status information
+	nSR_Order4_ID		: DINT;		//20	Order ID for feedback of status information
+	nSR_Order5_ID		: DINT;		//24	Order ID for feedback of status information
+	nSR_Order6_ID		: DINT;		//28	Order ID for feedback of status information
+	nSR_Order7_ID		: DINT;		//32	Order ID for feedback of status information
+	nSR_Order8_ID		: DINT;		//36	Order ID for feedback of status information
+	nSR_Order9_ID		: DINT;		//40	Order ID for feedback of status information
+	nSR_Order10_ID		: DINT;		//44	Order ID for feedback of status information
+	nSR_Order1_State	: BYTE;		//48	status feedback (in combination with nSR_Order1_ID)	
+	nSR_Order2_State	: BYTE;		//49	status feedback (in combination with nSR_Order2_ID)	
+	nSR_Order3_State	: BYTE;		//50	status feedback (in combination with nSR_Order3_ID)	
+	nSR_Order4_State	: BYTE;		//51	status feedback (in combination with nSR_Order4_ID)	
+	nSR_Order5_State	: BYTE;		//52	status feedback (in combination with nSR_Order5_ID)	
+	nSR_Order6_State	: BYTE;		//53	status feedback (in combination with nSR_Order6_ID)	
+	nSR_Order7_State	: BYTE;		//54	status feedback (in combination with nSR_Order7_ID)	
+	nSR_Order8_State	: BYTE;		//55	status feedback (in combination with nSR_Order8_ID)	
+	nSR_Order9_State	: BYTE;		//56	status feedback (in combination with nSR_Order9_ID)	
+	nSR_Order10_State	: BYTE;		//57	status feedback (in combination with nSR_Order10_ID)	
+	bPosActValid		: BOOL;		//58.0	Position data valid (SAK)
+	nHeartbeatPCOS		: BYTE;		//59	heartbeat from PCOS 1..245
+	nOverride			: BYTE;		//60	SysVar $OV_PRO
+	fPosActX			: REAL;		//61	SysVar $POS_ACT.X
+	fPosActY			: REAL;		//65	SysVar $POS_ACT.Y
+	fPosActZ			: REAL;		//69	SysVar $POS_ACT.Z
+	fPosActA			: REAL;		//73	SysVar $POS_ACT.A
+	fPosActB			: REAL;		//77	SysVar $POS_ACT.B
+	fPosActC			: REAL;		//81	SysVar $POS_ACT.C
+	nPosActStatus		: DINT;		//85	SysVar $POS_ACT.S
+	nPosActTurns		: BYTE;		//89	SysVar $POS_ACT.T
+	nToolAct			: SINT;		//90	SysVar $ACT_TOOL_C
+	nBaseAct			: SINT;		//91	SysVar $ACT_BASE_C
+	nIpoMode			: BYTE;		//92	SysVar $IPO_MODE_C
+	fAxisAct_A1			: REAL;		//93	SysVar $AXIS_ACT.A1
+	fAxisAct_A2			: REAL;		//97	SysVar $AXIS_ACT.A2
+	fAxisAct_A3			: REAL;		//101	SysVar $AXIS_ACT.A3
+	fAxisAct_A4			: REAL;		//105	SysVar $AXIS_ACT.A4
+	fAxisAct_A5			: REAL;		//109	SysVar $AXIS_ACT.A5
+	fAxisAct_A6			: REAL;		//113	SysVar $AXIS_ACT.A6
+	fAxisAct_A7			: REAL;		//117	SysVar $AXIS_ACT.A7
+	fAxisAct_A8			: REAL;		//121	SysVar $AXIS_ACT.A8
+	fAxisAct_A9			: REAL;		//125	SysVar $AXIS_ACT.A9
+	fAxisAct_A10		: REAL;		//129	SysVar $AXIS_ACT.A10
+	fAxisAct_A11		: REAL;		//133	SysVar $AXIS_ACT.A11
+	fAxisAct_A12		: REAL;		//137	SysVar $AXIS_ACT.A12
+	fVelAct				: REAL;		//141	SysVar $VEL_ACT
+	nVelAxis_A1			: SINT;		//145	SysVar $VEL_AXIS_ACT[1]
+	nVelAxis_A2			: SINT;		//146	SysVar $VEL_AXIS_ACT[2]
+	nVelAxis_A3			: SINT;		//147	SysVar $VEL_AXIS_ACT[3]
+	nVelAxis_A4			: SINT;		//148	SysVar $VEL_AXIS_ACT[4]
+	nVelAxis_A5			: SINT;		//149	SysVar $VEL_AXIS_ACT[5]
+	nVelAxis_A6			: SINT;		//150	SysVar $VEL_AXIS_ACT[6]
+	nVelAxis_A7			: SINT;		//151	SysVar $VEL_AXIS_ACT[7]
+	nVelAxis_A8			: SINT;		//152	SysVar $VEL_AXIS_ACT[8]
+	nVelAxis_A9			: SINT;		//153	SysVar $VEL_AXIS_ACT[9]
+	nVelAxis_A10		: SINT;		//154	SysVar $VEL_AXIS_ACT[10]
+	nVelAxis_A11		: SINT;		//155	SysVar $VEL_AXIS_ACT[11]
+	nVelAxis_A12		: SINT;		//156	SysVar $VEL_AXIS_ACT[12]
+	nGroupState			: BYTE;		//157	see state diagram
+	nErrorId			: INT;		//158	error id from main loop or interrupt
+	nErrorSubId			: INT;		//160	error id from submit interpreter
+	nActivePosOrderId	: DINT;		//162	order id of active move cmd
+	nActiveOrderIdB		: DINT;		//166	active order id in preparation
+	nQueueCount			: BYTE;		//170	current amount of functions in buffer
+	nIR_Status_1_2		: BYTE;		//171	status of interrupt 1 and 2
+	nIR_Status_3_4		: BYTE;		//172	status of interrupt 3 and 4
+	nIR_Status_5_6		: BYTE;		//173	status of interrupt 5 and 6
+	nIR_Status_7_8		: BYTE;		//174	status of interrupt 7 and 8
+	nErrorIdPCOS		: BYTE;		//175	error id of ProConOS
+	nFreeForMove		: BYTE;		//176	reserved for ProConOS
+	nTransmissionNoNet	: BYTE;		//177	acknowledge of transmission number
+	nOrderIdRet			: DINT;		//178	acknowledge take data of cmd
+	nCmdIdRet			: DINT;		//182	acknowledge take data of cmd
+	nCmdDataRetCS		: DINT;		//186	checksum data feedback
+	nReserved190		: DINT;		//190	reserved
+	fCmdDataRet1		: REAL;		//194	command dependent	
+	fCmdDataRet2		: REAL;		//198	command dependent	
+	fCmdDataRet3		: REAL;		//202	command dependent	
+	fCmdDataRet4		: REAL;		//206	command dependent	
+	fCmdDataRet5		: REAL;		//210	command dependent	
+	fCmdDataRet6		: REAL;		//214	command dependent	
+	fCmdDataRet7		: REAL;		//218	command dependent	
+	fCmdDataRet8		: REAL;		//222	command dependent	
+	fCmdDataRet9		: REAL;		//226	command dependent	
+	fCmdDataRet10		: REAL;		//230	command dependent	
+	fCmdDataRet11		: REAL;		//234	command dependent	
+	fCmdDataRet12		: REAL;		//238	command dependent
+	nReserve242			: DINT;		//242	reserved	
+	nReserve246			: ARRAY [1..10] OF BYTE; //246..255
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

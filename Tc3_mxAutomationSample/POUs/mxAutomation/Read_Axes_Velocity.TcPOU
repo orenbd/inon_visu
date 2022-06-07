@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="Read_Axes_Velocity" Id="{5448dba9-3321-4464-8073-b4edb9f17e41}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Read_Axes_Velocity
+VAR
+	
+	timer: Ton;
+	
+	// this function (ReadAxesVelocity) is an instance of the LIB (KRC_ReadActualAxisVelocity) function
+	ReadAxesVelocity : KRC_ReadActualAxisVelocity;
+	
+	
+	FLAG: BOOL;
+	FLAG_Done: BOOL;
+	VeloArray : ARRAY[1..6] OF INT;
+	Read: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	
+	
+timer(in:=NOT timer.q , PT:=T#100MS);
+IF timer.Q THEN
+	Read:=TRUE;
+END_IF
+
+///the function react only to rising edge of the INPPUT : ExecuteCmd
+readaxesvelocity(
+		axisgroupidx := gvl_settings.App_GroupIndex ,
+		ExecuteCmd :=Read,
+		done=> ,
+		error=>,
+		errorid=>,
+		a1=> ,
+		a2=> ,
+		a3=> ,
+		a4=> ,
+		a5=> ,
+		a6=> );
+
+IF ReadAxesVelocity.Done  THEN
+	FLAG_Done:=TRUE;
+	Read:=FALSE;
+	VeloArray[1]:=ReadAxesVelocity.A1;
+	VeloArray[2]:=ReadAxesVelocity.A2;
+	VeloArray[3]:=ReadAxesVelocity.A3;
+	VeloArray[4]:=ReadAxesVelocity.A4;
+	VeloArray[5]:=ReadAxesVelocity.A5;
+	VeloArray[6]:=ReadAxesVelocity.A6;
+ELSIF ReadAxesVelocity.Error THEN
+	FLAG:=TRUE;
+	Read:=FALSE;
+END_IF
+//END_IF	]]></ST>
+    </Implementation>
+    <LineIds Name="Read_Axes_Velocity">
+      <LineId Id="6" Count="2" />
+      <LineId Id="77" Count="2" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="43" Count="10" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="71" Count="4" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

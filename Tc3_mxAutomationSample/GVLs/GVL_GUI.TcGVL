@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="GVL_GUI" Id="{814453ef-59a4-433d-9666-5c718d5ed06f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	LinearTargetCommand :STRING;
+	GlobalPositionString :STRING;
+
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="E_MoveMode" Id="{60ab2f74-0210-4ca8-a32e-904ad3e7f80d}">
+    <Declaration><![CDATA[TYPE E_MoveMode :
+(
+	eMM_MoveAxisAbsolute := 0,
+	eMM_MoveRobLinearAbsolute
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

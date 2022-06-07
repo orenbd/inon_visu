@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_SafePower" Id="{9e63c281-7858-4abc-b5cd-14504f4701fe}" SpecialFunc="None">
+    <Declaration><![CDATA[// FB_SafePower sets contactor and lamp for one safety power output
+FUNCTION_BLOCK FB_SafePower
+VAR_INPUT
+	bSwitchPower 		: BOOL; // switch is set to ON
+	bHasPower			: BOOL; // contactor has power (Safety OK)
+END_VAR
+VAR_OUTPUT
+	bLightSelectPower 	: BOOL; // lamp
+	bSetSafetyPower		: BOOL; // bSwitchPower
+END_VAR
+
+VAR
+//	fbBlink: FB_Blink;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bSetSafetyPower := bSwitchPower;
+
+IF bSetSafetyPower AND bHasPower THEN
+	bLightSelectPower := TRUE;
+//ELSIF bSetSafetyPower AND NOT bHasPower THEN
+//	fbBlink(bEnable:= TRUE, bOut=> bLightSelectPower);
+ELSE
+	bLightSelectPower := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_SafePower">
+      <LineId Id="19" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

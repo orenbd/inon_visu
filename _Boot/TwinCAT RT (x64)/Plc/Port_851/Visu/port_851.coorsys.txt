@@ -1,0 +1,7 @@
+Id;Default
+1;robot
+2;couch
+3;calibration
+4;spare
+5;default
+;

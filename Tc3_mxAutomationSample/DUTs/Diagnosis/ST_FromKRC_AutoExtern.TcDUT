@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_FromKRC_AutoExtern" Id="{b0360814-dc61-4213-bd15-5066d0a30c25}">
+    <Declaration><![CDATA[TYPE ST_FromKRC_AutoExtern :
+STRUCT
+	bRcReady			: BOOL;	//0.0
+	bAlarmStop			: BOOL;	//0.1
+	bUserSAFE			: BOOL;	//0.2
+	bPeriReady			: BOOL;	//0.3
+	bRobCal				: BOOL;	//0.4
+	bIoActConf			: BOOL;	//0.5
+	bStopMess			: BOOL;	//0.6
+	bPgNoFBitRefl		: BOOL;	//0.7
+	
+	bIntEStop			: BOOL;	//1.0
+	bProAct				: BOOL;	//1.1
+	bPgNoReq			: BOOL;	//1.2
+	bApplRun			: BOOL;	//1.3
+	bProMove			: BOOL;	//1.4
+	bInHome				: BOOL;	//1.5
+	bOnPath				: BOOL;	//1.6
+	bNearPosRet			: BOOL;	//1.7
+	
+	bRobStopped			: BOOL;	//2.0
+	bT1					: BOOL;	//2.1
+	bT2					: BOOL;	//2.2
+	bAUT				: BOOL;	//2.3
+	bEXT				: BOOL;	//2.4
+	bBrakeTestMonTime	: BOOL;	//2.5
+	bBrakeTestReqInt	: BOOL;	//2.6
+	bBrakeTestWork		: BOOL;	//2.7
+	
+	bBrakeTestOK		: BOOL;	//3.0
+	bBrakeTestWarn		: BOOL;	//3.1
+	bReserve2075		: BOOL;	//3.2
+	bBrakeActive		: BOOL;	//3.3
+	bKcpConnect			: BOOL;	//3.4
+	bTouchUp			: BOOL;	//3.5
+	bMasTestReqInt		: BOOL;	//3.6
+	bMasTestSwitchOK	: BOOL;	//3.7
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

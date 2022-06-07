@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="GVL_PLC" Id="{4c479c3b-12bf-4620-b1ef-fff8f0f25d8f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	Int_windowsCounter: ULINT;
+	Str_windowsCounter: STRING;
+	
+	
+	ReadWindowsTime : fb_localsystemTime;
+	String_WindowsTime: STRING;
+	Time_SystemTime : TIMESTRUCT;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

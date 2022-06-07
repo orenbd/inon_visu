@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="E_ExecMode" Id="{878ac262-d358-4f5c-acc0-412425241ec8}">
+    <Declaration><![CDATA[TYPE E_ExecMode :
+(
+	eEM_Submit 		:= 0, 	//direct execution, 0
+	eEM_Aborting	:= 1,	//1
+	eEM_Buffered	:= 2	//2
+) BYTE;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

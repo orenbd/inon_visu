@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="E_MxA_PCOSError" Id="{5859fc6b-3cff-42aa-bee4-1f8769bc434d}">
+    <Declaration><![CDATA[TYPE E_MxA_PCOSError :
+(
+	eMxA_OK 				:= 0, 	
+	eMxA_InternalError		:= 701,
+	eMxA_AssertFailed,
+	eMxA_InvCmdID,
+	eMxA_InvHeaderData,
+	eMxA_InvChkSumPlcToKrc	:= 712,
+	eMxA_InvMoveType,
+	eMxA_InvPtpApo			:= 730,
+	eMxA_InvCpApo,
+	eMxA_InvBasNo,
+	eMxA_InvToolNo,
+	eMxA_InvVelo,
+	eMxA_InvAccel,
+	eMxA_InvCPtp,
+	eMxA_InvCDis,
+	eMxA_InvCVelo,
+	eMxA_InvCOri,
+	eMxA_InvOriType,
+	eMxA_PosDataNotInit,
+	eMxA_AxisPosDataNotInit,
+	eMxA_InvTrigDis,
+	eMxA_InvTrigIO,
+	eMxA_InvTrigPulse,
+	eMxA_InvCircHP,
+	eMxA_InvIntIO,
+	eMxA_InvIntPrio,
+	eMxA_InvIntAct		:= 750,
+	eMxA_InvIONo,
+	eMxA_InvPulseDuration,
+	eMxA_InvBufferMode,
+	eMxA_InvToolNoForDataLoad,
+	eMxA_InvAnalogIONo,
+	eMxA_InvIpoMode,
+	eMxA_InvCircType,
+	eMxA_InvFrameData,
+	eMxA_InvLodaData,
+	eMxA_InvSoftEndRev,
+	eMxA_InvRealValue	:= 765,
+	eMxA_ParValue		:= 770
+) DINT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

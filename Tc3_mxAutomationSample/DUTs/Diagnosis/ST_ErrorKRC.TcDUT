@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_ErrorKRC" Id="{43368c26-3447-434f-8fcb-747ff3bbb016}">
+    <Declaration><![CDATA[TYPE ST_ErrorKRC :
+STRUCT
+	bStopMessage   		: BOOL;
+	nMessageCount 		: INT;
+	nMessage     		: ARRAY [1..10] OF E_MxA_Error;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

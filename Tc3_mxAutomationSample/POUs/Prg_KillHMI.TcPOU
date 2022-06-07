@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="Prg_KillHMI" Id="{591713a3-a728-406b-9007-1d459729a57b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Prg_KillHMI
+VAR
+	fbKillHMI: NT_StartProcess;
+	KillHMI:BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+fbKillHMI(
+	NETID:='' , 
+	PATHSTR:='C:\TwinCAT\3.1\Boot\Plc\KillHMi_v2.bat' , 
+	DIRNAME:='C:\TwinCAT\3.1\Boot\Plc' , 
+	COMNDLINE:='' ,
+	START:=KillHMI , 
+	TMOUT:= T#10S, 
+	BUSY=> , 
+	ERR=> , 
+	ERRID=> );	
+KillHMI:=FALSE;]]></ST>
+    </Implementation>
+    <LineIds Name="Prg_KillHMI">
+      <LineId Id="6" Count="10" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

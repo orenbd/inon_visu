@@ -1,0 +1,6 @@
+Id;Default
+1;Fold
+2;Home
+3;Approach
+4;Origin
+;

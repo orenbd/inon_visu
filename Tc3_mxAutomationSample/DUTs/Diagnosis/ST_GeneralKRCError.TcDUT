@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_GeneralKRCError" Id="{f387bba3-e43f-461b-a035-2d1cc483c0f4}">
+    <Declaration><![CDATA[TYPE ST_GeneralKRCError :
+STRUCT
+	nErrorId 			: DINT;
+	bNoHeartbeatKrc 	: BOOL;
+	bNoHeartbeatPCOS 	: BOOL;
+	bNotOnline 			: BOOL;
+	bNotInitialized 	: BOOL;
+	bNoOpModeExt 		: BOOL;
+	bNoMoveEnable		: BOOL;
+	bUserSafeNotOK		: BOOL;
+	bKrcErrorActive 	: BOOL;
+	bDrivesNotReady		: BOOL; 
+	bNoProgActive		: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

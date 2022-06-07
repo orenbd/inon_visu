@@ -1,0 +1,7 @@
+Id;Default
+1;laser
+2;screw
+3;demo
+4;lens
+5;spare
+;
